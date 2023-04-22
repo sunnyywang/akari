@@ -161,8 +161,16 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public boolean isClueSatisfied(int r, int c) { // ip
-    return false;
+  public boolean isClueSatisfied(int r, int c) {
+    if (r >= puzzle.getHeight() || c >= puzzle.getWidth() || c < 0 || r < 0)
+      throw new IndexOutOfBoundsException();
+    if (puzzle.getCellType(r, c) != CellType.CLUE) throw new IllegalArgumentException();
+    int numLights = 0;
+    if (r > 0 && lights[r - 1][c] == 1) numLights++;
+    if (r < puzzle.getHeight() - 1 && lights[r + 1][c] == 1) numLights++;
+    if (c > 0 && lights[r][c - 1] == 1) numLights++;
+    if (c < puzzle.getWidth() - 1 && lights[r][c + 1] == 1) numLights++;
+    return numLights == puzzle.getClue(r, c);
   }
 
   @Override
