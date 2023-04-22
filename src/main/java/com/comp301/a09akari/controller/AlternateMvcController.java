@@ -1,5 +1,7 @@
 package com.comp301.a09akari.controller;
 
+import com.comp301.a09akari.model.Puzzle;
+
 public interface AlternateMvcController {
   /** Handles the click action to go to the next puzzle */
   void clickNextPuzzle();
