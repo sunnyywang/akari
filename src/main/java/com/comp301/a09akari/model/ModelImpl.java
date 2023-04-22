@@ -63,6 +63,12 @@ public class ModelImpl implements Model {
 
       if (lights[r][i] == 1) return true;
     }
+    for (int i = c; i >= 0; i--) {
+      if (puzzle.getCellType(r, i) == CellType.CLUE || puzzle.getCellType(r, i) == CellType.WALL)
+        break; // if blocked
+
+      if (lights[r][i] == 1) return true;
+    }
 
     for (int i = r; i < puzzle.getHeight(); i++) {
       if (puzzle.getCellType(i, c) == CellType.CLUE || puzzle.getCellType(i, c) == CellType.WALL)
@@ -70,6 +76,13 @@ public class ModelImpl implements Model {
 
       if (lights[i][c] == 1) return true;
     }
+
+    for (int i = r; i >= 0; i--) {
+      if (puzzle.getCellType(i, c) == CellType.CLUE || puzzle.getCellType(i, c) == CellType.WALL)
+        break;
+      if (lights[i][c] == 1) return true;
+    }
+
     return false;
   }
 
@@ -98,7 +111,18 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public void setActivePuzzleIndex(int index) { // ip
+  public void setActivePuzzleIndex(int index) {
+    if (index < 0 || index >= getPuzzleLibrarySize()) throw new IndexOutOfBoundsException();
+    this.activePuzzle = index;
+    this.puzzle = library.getPuzzle(activePuzzle);
+    this.lights = new int[puzzle.getHeight()][puzzle.getWidth()];
+    // sets up puzzle
+    for (int r = 0; r < puzzle.getHeight(); r++) {
+      for (int c = 0; c < puzzle.getWidth(); c++) {
+        lights[r][c] = 0;
+      }
+    }
+    notifyObservers();
   }
 
   @Override
@@ -136,7 +160,7 @@ public class ModelImpl implements Model {
     observers.remove(observer);
   }
 
-  private void notifyObservers() { // for notifying observers
+  private void notifyObservers() {
     for (ModelObserver mo : observers) mo.update(this);
   }
 }
