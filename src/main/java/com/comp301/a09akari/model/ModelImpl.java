@@ -97,6 +97,12 @@ public class ModelImpl implements Model {
 
   @Override
   public boolean isLampIllegal(int r, int c) { // ip
+    if (this.lights[r][c] != 1) // not a lamp
+    throw new IllegalArgumentException();
+    if (r >= puzzle.getHeight() || c >= puzzle.getWidth() || c < 0 || r < 0)
+      throw new IndexOutOfBoundsException();
+    if (puzzle.getCellType(r, c) != CellType.CORRIDOR) throw new IllegalArgumentException();
+
     return false;
   }
 
@@ -141,8 +147,17 @@ public class ModelImpl implements Model {
   }
 
   @Override
-  public boolean isSolved() { // ip
-    return false;
+  public boolean isSolved() {
+    for (int r = 0; r < puzzle.getHeight(); r++) {
+      for (int c = 0; c < puzzle.getWidth(); c++) {
+        if (puzzle.getCellType(r, c) == CellType.CORRIDOR) {
+          if (!isLit(r, c)) return false;
+          if (lights[r][c] == 1 && isLampIllegal(r, c)) return false;
+        }
+        if (puzzle.getCellType(r, c) == CellType.CLUE && !isClueSatisfied(r, c)) return false;
+      }
+    }
+    return true;
   }
 
   @Override
