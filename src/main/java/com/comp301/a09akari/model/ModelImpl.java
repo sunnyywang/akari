@@ -102,17 +102,32 @@ public class ModelImpl implements Model {
     if (r >= puzzle.getHeight() || c >= puzzle.getWidth() || c < 0 || r < 0)
       throw new IndexOutOfBoundsException();
     if (puzzle.getCellType(r, c) != CellType.CORRIDOR) throw new IllegalArgumentException();
-    for (int i = c + 1; i < puzzle.getWidth(); i++) {
-      if (puzzle.getCellType(r, i) == CellType.CLUE || puzzle.getCellType(r, i) == CellType.WALL)
-        break; // if blocked
-      if (lights[r][i] == 1) return true;
-    }
-    for (int i = r + 1; i < puzzle.getHeight(); i++) {
-      if (puzzle.getCellType(i, c) == CellType.CLUE || puzzle.getCellType(i, c) == CellType.WALL) {
-        break;
+    if (c > 0) {
+      for (int i = c - 1; i >= 0; i--) {
+        if (puzzle.getCellType(r, i) == CellType.CLUE || puzzle.getCellType(r, i) == CellType.WALL)
+          break; // blocked
+        if (lights[r][i] == 1) return true;
       }
-      if (lights[i][c] == 1) {
-        return true;
+    }
+    if (c < puzzle.getWidth() - 1) {
+      for (int i = c + 1; i < puzzle.getWidth(); i++) {
+        if (puzzle.getCellType(r, i) == CellType.CLUE || puzzle.getCellType(r, i) == CellType.WALL)
+          break; // blocked
+        if (lights[r][i] == 1) return true;
+      }
+    }
+    if (r > 0) {
+      for (int i = r - 1; i >= 0; i--) {
+        if (puzzle.getCellType(i, c) == CellType.CLUE || puzzle.getCellType(i, c) == CellType.WALL)
+          break; // blocked
+        if (lights[i][c] == 1) return true;
+      }
+    }
+    if (r < puzzle.getHeight() - 1) {
+      for (int i = r + 1; i < puzzle.getHeight(); i++) {
+        if (puzzle.getCellType(i, c) == CellType.CLUE || puzzle.getCellType(i, c) == CellType.WALL)
+          break; // blocked
+        if (lights[i][c] == 1) return true;
       }
     }
     return false;
