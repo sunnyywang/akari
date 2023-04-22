@@ -18,11 +18,11 @@ public class PuzzleImpl implements Puzzle {
   }
 
   @Override
-  public CellType getCellType(int row, int col) {
-    if (row >= getHeight() || col >= getWidth() || row < 0 || col < 0) {
+  public CellType getCellType(int r, int c) {
+    if (r >= getHeight() || c >= getWidth() || r < 0 || c < 0) {
       throw new IndexOutOfBoundsException();
     }
-    int cell = board[row][col];
+    int cell = board[r][c];
 
     if (cell < 5) {
       return CellType.CLUE;
@@ -37,11 +37,11 @@ public class PuzzleImpl implements Puzzle {
   }
 
   @Override
-  public int getClue(int row, int col) {
-    if (row >= getHeight() || col >= getWidth() || row < 0 || col < 0) {
+  public int getClue(int r, int c) {
+    if (r >= getHeight() || c >= getWidth() || r < 0 || c < 0) {
       throw new IndexOutOfBoundsException();
     }
-    int cell = board[row][col];
+    int cell = board[r][c];
 
     if (cell > 4) {
       throw new IllegalArgumentException();
