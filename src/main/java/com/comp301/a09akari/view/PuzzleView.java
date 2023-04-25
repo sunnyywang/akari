@@ -10,13 +10,12 @@ import javafx.scene.layout.*;
 public class PuzzleView implements FXComponent, ModelObserver {
   private final ClassicMvcController controller;
   private final Scene scene;
-
   private final Model model;
 
   public PuzzleView(Model model, ClassicMvcController controller) {
     this.controller = controller;
     this.model = model;
-    this.scene = new Scene(render(), 500, 500);
+    this.scene = new Scene(render(), 600  , 600);
     // registering an observer
     model.addObserver(this);
   }
@@ -25,13 +24,13 @@ public class PuzzleView implements FXComponent, ModelObserver {
   public Parent render() {
     BorderPane layout = new BorderPane();
 
-    MessageView message = new MessageView(controller);
+    MessageView message = new MessageView(this.model, this.controller);
     layout.setTop(message.render());
 
-    ControlView controller = new ControlView(this.controller);
+    ControlView controller = new ControlView(this.model, this.controller);
     layout.setBottom(controller.render());
 
-    GridPanel grid = new GridPanel(this.controller);
+    GridPanel grid = new GridPanel(this.model, this.controller);
     layout.setCenter(grid.render());
 
     return layout;

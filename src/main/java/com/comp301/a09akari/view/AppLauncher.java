@@ -2,7 +2,6 @@ package com.comp301.a09akari.view;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import com.comp301.a09akari.SamplePuzzles;
 import com.comp301.a09akari.controller.ClassicMvcController;
 import com.comp301.a09akari.controller.ControllerImpl;
@@ -28,14 +27,7 @@ public class AppLauncher extends Application {
 
     stage.setScene(puzzle.getScene());
 
-    // registering an active ModelObserver w/ lambda expression
-    // model.addObserver(
-    //      (Model m) -> {
-    //      scene.setRoot(puzzle.render());
-    //   stage.sizeToScene();
-    // });
-
-    stage.setTitle("Welcome to Akari");
+    stage.setTitle("Welcome to Akari! Hope you enjoy this game:)");
     stage.show();
   }
 }
