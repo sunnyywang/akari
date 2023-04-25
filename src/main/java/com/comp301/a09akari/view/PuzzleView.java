@@ -15,7 +15,7 @@ public class PuzzleView implements FXComponent, ModelObserver {
   public PuzzleView(Model model, ClassicMvcController controller) {
     this.controller = controller;
     this.model = model;
-    this.scene = new Scene(render(), 600  , 600);
+    this.scene = new Scene(render(), 600, 600);
     // registering an observer
     model.addObserver(this);
   }
