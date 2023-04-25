@@ -1,17 +1,24 @@
 package com.comp301.a09akari.view;
 
 import com.comp301.a09akari.controller.ClassicMvcController;
+import com.comp301.a09akari.model.Model;
+import com.comp301.a09akari.model.ModelObserver;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 
-public class PuzzleView implements FXComponent {
+public class PuzzleView implements FXComponent, ModelObserver {
   private final ClassicMvcController controller;
   private final Scene scene;
 
-  public PuzzleView(ClassicMvcController controller) {
+  private final Model model;
+
+  public PuzzleView(Model model, ClassicMvcController controller) {
     this.controller = controller;
+    this.model = model;
     this.scene = new Scene(render(), 500, 500);
+    // registering an observer
+    model.addObserver(this);
   }
 
   @Override
@@ -32,5 +39,10 @@ public class PuzzleView implements FXComponent {
 
   public Scene getScene() {
     return scene;
+  }
+
+  @Override
+  public void update(Model model) {
+    scene.setRoot(render());
   }
 }

@@ -24,7 +24,7 @@ public class AppLauncher extends Application {
     // new controller
     ClassicMvcController controller = new ControllerImpl(model);
     // new puzzle view
-    PuzzleView puzzle = new PuzzleView(controller);
+    PuzzleView puzzle = new PuzzleView(model, controller);
 
     stage.setScene(puzzle.getScene());
 
